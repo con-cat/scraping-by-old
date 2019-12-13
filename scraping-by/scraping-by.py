@@ -11,6 +11,10 @@ locale.setlocale(locale.LC_ALL, "")
 
 API_URL = "https://www.woolworths.com.au/apis/ui/product/detail/{}?isMobile=false"
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:71.0) Gecko/20100101 Firefox/71.0"
+}
+
 PRODUCTS = [
     922828,  # Dorset cereals nut granola
     609558,  # Dorset cereals berry granola
@@ -23,7 +27,7 @@ PRODUCTS = [
 
 
 def getProductData(productId):
-    response = requests.get(API_URL.format(str(productId)))
+    response = requests.get(API_URL.format(str(productId)), headers=HEADERS)
     if response.status_code == 200:
         return response.json()["Product"]
     else:
