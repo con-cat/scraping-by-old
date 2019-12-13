@@ -1,6 +1,7 @@
 import json
-import urllib.request
 import locale
+
+import requests
 
 locale.setlocale(locale.LC_ALL, "")
 
@@ -16,8 +17,11 @@ PRODUCTS = [
 
 
 def getProductData(productId):
-    response = urllib.request.urlopen(API_URL.format(str(productId)))
-    return json.load(response)["Product"]
+    response = requests.get(API_URL.format(str(productId)))
+    if response.status_code == 200:
+        return response.json()["Product"]
+    else:
+        return False
 
 
 def getName(product):
@@ -38,18 +42,23 @@ def getDiscount(product):
 
 for product in PRODUCTS:
     productData = getProductData(product)
-    name = getName(productData)
-    currentPrice = locale.currency(getCurrentPrice(productData))
-    if isOnSpecial(productData):
-        discount = "{0:.0%}".format(getDiscount(productData))
-        print(
-            "🚨🤑 {name} is on special!!!! Current price: {currentPrice}, {discount} discount!".format(
+    if productData:
+        name = getName(productData)
+        currentPrice = locale.currency(getCurrentPrice(productData))
+        if isOnSpecial(productData):
+            discount = "{0:.0%}".format(getDiscount(productData))
+            message = "🚨🤑 {name} is on special!!!! Current price: {currentPrice}, {discount} discount!".format(
                 name=name, currentPrice=currentPrice, discount=discount
             )
-        )
-    else:
-        print(
-            "👎💸 {name} is not on special. Current price: {currentPrice}".format(
-                name=name, currentPrice=currentPrice
+            print(message)
+            slackRequest = requests.post(SLACK_URL, json={"text": message},)
+        else:
+            print(
+                "👎💸 {name} is not on special. Current price: {currentPrice}".format(
+                    name=name, currentPrice=currentPrice
+                )
             )
-        )
+    else:
+        message = "💔🙁 Can't find product id {}".format(str(product))
+        print(message)
+        slackRequest = requests.post(SLACK_URL, json={"text": message},)
