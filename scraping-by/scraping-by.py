@@ -2,7 +2,7 @@ import json
 import locale
 from os import environ
 from dotenv import load_dotenv
-
+from time import sleep
 import requests
 
 load_dotenv()
@@ -55,6 +55,7 @@ def postToSlack(message):
 
 for product in PRODUCTS:
     productData = getProductData(product)
+    sleep(5)
     if productData:
         name = getName(productData)
         currentPrice = locale.currency(getCurrentPrice(productData))
