@@ -1,8 +1,11 @@
 import json
 import locale
 from os import environ
+from dotenv import load_dotenv
 
 import requests
+
+load_dotenv()
 
 locale.setlocale(locale.LC_ALL, "")
 
