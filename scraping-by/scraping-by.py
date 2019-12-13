@@ -1,5 +1,6 @@
 import json
 import locale
+from os import environ
 
 import requests
 
@@ -51,7 +52,7 @@ for product in PRODUCTS:
                 name=name, currentPrice=currentPrice, discount=discount
             )
             print(message)
-            slackRequest = requests.post(System.getenv("SLACK_URL"), json={"text": message},)
+            slackRequest = requests.post(environ["SLACK_URL"], json={"text": message},)
         else:
             print(
                 "👎💸 {name} is not on special. Current price: {currentPrice}".format(
@@ -61,4 +62,4 @@ for product in PRODUCTS:
     else:
         message = "💔🙁 Can't find product id {}".format(str(product))
         print(message)
-        slackRequest = requests.post(System.getenv("SLACK_URL"), json={"text": message},)
+        slackRequest = requests.post(environ["SLACK_URL"], json={"text": message},)
