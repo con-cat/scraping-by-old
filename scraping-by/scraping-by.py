@@ -13,7 +13,9 @@ PRODUCTS = [
     609558,  # Dorset cereals berry granola
     575838,  # Mayvers dark crunchy peanut butter
     781034,  # Mayvers regular crunchy peanut butter
-    360257,  # Pic's crunchy peanut butter
+    49905,   # Bonne Maman raspberry jam
+    269903,  # Barker's Anathoth raspberry jam
+    227264,  # Earth Choice dish soap
 ]
 
 
@@ -22,7 +24,7 @@ def getProductData(productId):
     if response.status_code == 200:
         return response.json()["Product"]
     else:
-        return False
+        return None
 
 
 def getName(product):
