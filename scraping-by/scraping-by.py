@@ -43,6 +43,13 @@ def getDiscount(product):
     return product["InstoreSavingsAmount"] / product["InstoreWasPrice"]
 
 
+def postToSlack(message):
+    if environ.get("SLACK_URL"):
+         return requests.post(environ["SLACK_URL"], json={"text": "<!here> " + message},)
+    else:
+        print("⚠️ Didn't post to Slack")
+
+
 for product in PRODUCTS:
     productData = getProductData(product)
     if productData:
@@ -54,7 +61,7 @@ for product in PRODUCTS:
                 name=name, currentPrice=currentPrice, discount=discount
             )
             print(message)
-            slackRequest = requests.post(environ["SLACK_URL"], json={"text": message},)
+            postToSlack(message)
         else:
             print(
                 "👎💸 {name} is not on special. Current price: {currentPrice}".format(
@@ -64,4 +71,4 @@ for product in PRODUCTS:
     else:
         message = "💔🙁 Can't find product id {}".format(str(product))
         print(message)
-        slackRequest = requests.post(environ["SLACK_URL"], json={"text": message},)
+        postToSlack(message)
