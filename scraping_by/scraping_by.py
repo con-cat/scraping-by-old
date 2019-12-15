@@ -57,28 +57,32 @@ def postToSlack(message):
         print("⚠️ Didn't post to Slack")
 
 
-def scrape(products):
-    for product in PRODUCTS:
-        productData = getProductData(product)
-        sleep(20)
-        if productData:
-            name = getName(productData)
-            currentPrice = locale.currency(getCurrentPrice(productData))
-            if isOnSpecial(productData):
-                discount = "{0:.0%}".format(getDiscount(productData))
-                message = "🚨🤑 {name} is on special!!!! Current price: {currentPrice}, {discount} discount!".format(
-                    name=name, currentPrice=currentPrice, discount=discount
-                )
-                print(message)
-                # postToSlack(message)
-            else:
-                print(
-                    "👎💸 {name} is not on special. Current price: {currentPrice}".format(
-                        name=name, currentPrice=currentPrice
-                    )
-                )
-        else:
-            message = "💔🙁 Can't find product id {}".format(str(product))
+def composeAndPostMessage(product):
+    productData = getProductData(product)
+    # sleep(20)
+    if productData:
+        name = getName(productData)
+        currentPrice = locale.currency(getCurrentPrice(productData))
+        if isOnSpecial(productData):
+            discount = "{0:.0%}".format(getDiscount(productData))
+            message = "🚨🤑 {name} is on special!!!! Current price: {currentPrice}, {discount} discount!".format(
+                name=name, currentPrice=currentPrice, discount=discount
+            )
             print(message)
             # postToSlack(message)
+        else:
+            print(
+                "👎💸 {name} is not on special. Current price: {currentPrice}".format(
+                    name=name, currentPrice=currentPrice
+                )
+            )
+    else:
+        message = "💔🙁 Can't find product id {}".format(str(product))
+        print(message)
+        # postToSlack(message)
+
+
+def scrape(products):
+    for product in PRODUCTS:
+        composeAndPostMessage(product)
     return "🤑 Scraping done"
