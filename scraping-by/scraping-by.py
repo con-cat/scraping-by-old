@@ -1,5 +1,6 @@
 import locale
 from os import environ
+from random import randint
 from time import sleep
 
 import requests
@@ -59,7 +60,7 @@ def postToSlack(message):
 
 for product in PRODUCTS:
     productData = getProductData(product)
-    sleep(20)
+    sleep(randint(10, 20))
     if productData:
         name = getName(productData)
         currentPrice = locale.currency(getCurrentPrice(productData))
