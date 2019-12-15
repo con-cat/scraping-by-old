@@ -1,9 +1,9 @@
-import json
 import locale
 from os import environ
-from dotenv import load_dotenv
 from time import sleep
+
 import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -20,7 +20,7 @@ PRODUCTS = [
     609558,  # Dorset cereals berry granola
     575838,  # Mayvers dark crunchy peanut butter
     781034,  # Mayvers regular crunchy peanut butter
-    49905,   # Bonne Maman raspberry jam
+    49905,  # Bonne Maman raspberry jam
     269903,  # Barker's Anathoth raspberry jam
     227264,  # Earth Choice dish soap
 ]
@@ -52,7 +52,7 @@ def getDiscount(product):
 
 def postToSlack(message):
     if environ.get("SLACK_URL"):
-         return requests.post(environ["SLACK_URL"], json={"text": "<!here> " + message},)
+        return requests.post(environ["SLACK_URL"], json={"text": "<!here> " + message},)
     else:
         print("⚠️ Didn't post to Slack")
 
