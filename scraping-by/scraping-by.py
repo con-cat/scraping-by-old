@@ -59,7 +59,7 @@ def postToSlack(message):
 
 for product in PRODUCTS:
     productData = getProductData(product)
-    sleep(5)
+    sleep(20)
     if productData:
         name = getName(productData)
         currentPrice = locale.currency(getCurrentPrice(productData))
