@@ -58,6 +58,8 @@ def postToSlack(message):
         print("⚠️ Didn't post to Slack")
 
 
+errorMessages = []
+
 for product in PRODUCTS:
     productData = getProductData(product)
     sleep(randint(10, 20))
@@ -80,4 +82,8 @@ for product in PRODUCTS:
     else:
         message = "💔🙁 Can't find product id {}".format(str(product))
         print(message)
-        postToSlack(message)
+        errorMessages.append(message)
+
+if len(errorMessages) > 0:
+    message = "\n".join(errorMessages)
+    postToSlack("\n" + message)
