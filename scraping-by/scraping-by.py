@@ -63,7 +63,7 @@ errorMessages = []
 for product in PRODUCTS:
     productData = getProductData(product)
     sleep(randint(10, 20))
-    if productData:
+    if productData and getCurrentPrice(productData):
         name = getName(productData)
         currentPrice = locale.currency(getCurrentPrice(productData))
         if isOnSpecial(productData):
