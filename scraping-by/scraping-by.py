@@ -17,13 +17,16 @@ HEADERS = {
 }
 
 PRODUCTS = [
-    922828,  # Dorset cereals nut granola
-    609558,  # Dorset cereals berry granola
-    575838,  # Mayvers dark crunchy peanut butter
-    781034,  # Mayvers regular crunchy peanut butter
+    85470,  # Dorset cereals nut granola
+    85468,  # Dorset cereals berry granola
+    575838, # Mayvers dark crunchy peanut butter
+    781034, # Mayvers regular crunchy peanut butter
+    63040,  # Bonne Maman strawberry jam
     49905,  # Bonne Maman raspberry jam
-    269903,  # Barker's Anathoth raspberry jam
-    227264,  # Earth Choice dish soap
+    269897, # Barker's Anathoth raspberry jam
+    227264, # Earth Choice dish soap green tea and lime 500ml
+    360257, # /pic-s-peanut-butter-crunchy
+    824820, # /oral-b-floss-action-refills 4x
 ]
 
 
