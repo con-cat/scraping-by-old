@@ -54,9 +54,11 @@ def getDiscount(product):
     return product["InstoreSavingsAmount"] / product["InstoreWasPrice"]
 
 
-def postToSlack(message):
+def postToSlack(message, here=True):
+    if here:
+        message = "<!here> " + message
     if environ.get("SLACK_URL"):
-        return requests.post(environ["SLACK_URL"], json={"text": "<!here> " + message},)
+        return requests.post(environ["SLACK_URL"], json={"text": message},)
     else:
         print("⚠️ Didn't post to Slack")
 
@@ -89,4 +91,4 @@ for product in PRODUCTS:
 
 if len(errorMessages) > 0:
     message = "\n".join(errorMessages)
-    postToSlack("\n" + message)
+    postToSlack(message, here=False)
